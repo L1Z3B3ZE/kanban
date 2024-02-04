@@ -10,7 +10,8 @@ new Vue({
         deadline: '',
         edited: '',
         editedDescription:'',
-        editedDeadline: ''
+        editedDeadline: '',
+        reasonForReturn: ''
     },
     methods: {
         addTask() {
@@ -20,7 +21,8 @@ new Vue({
                 description: this.newTaskDesc,
                 deadline: this.deadline,
                 timeout: this.timeout,
-                edited: false
+                edited: false,
+                reasonForReturn: this.reasonForReturn,
             }
             this.column1.push(newTask);
             this.newTaskDesc = '';
@@ -51,6 +53,24 @@ new Vue({
             this.column2.splice(this.column2.indexOf(card), 1);
             this.column3.push(card);
         },
+        moveToColumn4(card){
+            this.column3.splice(this.column3.indexOf(card), 1);
+            this.column4.push(card);
+            let dateNow= new Date().getTime();
+            let dateCompleted=new Date(card.deadline).getTime()
+            if (dateCompleted >=dateNow){
+                card.timeout = 'Выполнено в срок'
+            }else {
+                card.timeout = 'Просроченно'
+            }
+        },
+        returnToColumn2(card){
+            this.column3.splice(this.column3.indexOf(card), 1);
+            this.column2.push(card);
+            card.push(this.reasonForReturn)
+
+        }
+
     }
 })
 
