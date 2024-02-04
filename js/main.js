@@ -31,7 +31,7 @@ new Vue({
             newTask.creationDate = new Date().toLocaleString();
         },
 
-        removeCard(card){
+        removeTask(card){
             this.column1.splice(this.column1.indexOf(card), 1);
         },
         editTasks(card) {
@@ -61,14 +61,13 @@ new Vue({
             if (dateCompleted >=dateNow){
                 card.timeout = 'Выполнено в срок'
             }else {
-                card.timeout = 'Просроченно'
+                card.timeout = 'Просрочено'
             }
         },
         returnToColumn2(card){
             this.column3.splice(this.column3.indexOf(card), 1);
             this.column2.push(card);
             card.push(this.reasonForReturn)
-
         }
 
     }

@@ -39,7 +39,7 @@
                 <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
             </div>
             <button  v-on:click="editTasks(card)">Редактировать</button>
-            <button v-on:click="removeCard(card)">Удалить</button>
+            <button v-on:click="removeTask(card)">Удалить</button>
             <button  v-on:click="moveToColumn2(card)">Переместить во второй столбец</button>
         </div>
     </div>
@@ -101,6 +101,7 @@
             <h3>{{ card.title }}</h3>
             <h3>Описание: {{ card.description }}</h3>
             <h3>Дата создания: {{ card.creationDate }}</h3>
+            <h3>{{card.timeout}}</h3>
         </div>
     </div>
 
