@@ -28,6 +28,7 @@
             <h3>Описание: {{ card.description }}</h3>
             <h3>Дэдлайн: {{ card.deadline }}</h3>
             <h3>Дата создания: {{ card.creationDate }}</h3>
+            <button v-on:click="removeCard(card)">Удалить</button>
         </div>
     </div>
 

@@ -25,6 +25,10 @@ new Vue({
             this.deadline = '';
             newTask.creationDate = new Date().toLocaleString();
         },
+
+        removeCard(card){
+            this.column1.splice(this.column1.indexOf(card), 1);
+        },
     }
 })
 
