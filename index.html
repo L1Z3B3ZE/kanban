@@ -28,6 +28,17 @@
             <h3>Описание: {{ card.description }}</h3>
             <h3>Дэдлайн: {{ card.deadline }}</h3>
             <h3>Дата создания: {{ card.creationDate }}</h3>
+            <div v-if="card.editedDate">
+                <h3>Отредактировано: {{card.editedDate}}</h3>
+            </div>
+            <div v-if="card.edited">
+                <label>Измените описание:</label><br>
+                <textarea v-model="editedDescription"></textarea><br>
+                <label>Измените срок сдачи:</label>
+                <input type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31"/><br>
+                <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+            </div>
+            <button  v-on:click="editTasks(card)">Редактировать</button>
             <button v-on:click="removeCard(card)">Удалить</button>
         </div>
     </div>

@@ -8,6 +8,9 @@ new Vue({
         newTaskTitle: '',
         newTaskDesc: '',
         deadline: '',
+        edited: '',
+        editedDescription:'',
+        editedDeadline: ''
     },
     methods: {
         addTask() {
@@ -28,6 +31,17 @@ new Vue({
 
         removeCard(card){
             this.column1.splice(this.column1.indexOf(card), 1);
+        },
+        editTasks(card) {
+            card.edited = true;
+        },
+        saveEditedTask(card,newDescription,newDeadline){
+            card.description=newDescription
+            card.deadline=newDeadline
+            card.editedDate =new Date().toLocaleString()
+            this.editedDeadline=''
+            this.editedDescription=''
+            card.edited = false
         },
     }
 })
