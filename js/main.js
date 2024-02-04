@@ -43,6 +43,10 @@ new Vue({
             this.editedDescription=''
             card.edited = false
         },
+        moveToColumn2(card){
+            this.column1.splice(this.column1.indexOf(card), 1);
+            this.column2.push(card);
+        },
     }
 })
 

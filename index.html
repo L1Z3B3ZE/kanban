@@ -40,11 +40,18 @@
             </div>
             <button  v-on:click="editTasks(card)">Редактировать</button>
             <button v-on:click="removeCard(card)">Удалить</button>
+            <button  v-on:click="moveToColumn2(card)">Переместить во второй столбец</button>
         </div>
     </div>
 
     <div class="column">
         <h2>Задачи в работе</h2>
+        <div v-for="card in column2" :key="card.id" class="card">
+            <h3>Заголовок: {{ card.title }}</h3>
+            <h3>Описание: {{ card.description }}</h3>
+            <h3>Дата завершения: {{ card.deadline }}</h3>
+            <h3>Дата создания: {{ card.creationDate }}</h3>
+        </div>
     </div>
 
     <div class="column">
