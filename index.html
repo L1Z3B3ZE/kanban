@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ToDo</title>
+    <title>Kanban</title>
     <link rel="stylesheet" href="css/main.css">
     <script defer src="js/vue.js"></script>
     <script defer src="js/main.js"></script>
@@ -11,100 +11,105 @@
 
 <body>
 <div id="app">
-
-    <div class="column">
-        <h2>Запланированные задачи</h2>
-        <form class="form" @submit.prevent="addTask">
-            <label for="task_title">Заголовок:</label>
-            <input id="task_title" type="text" v-model="newTaskTitle" required>
-            <label for="task_desc">Описание:</label>
-            <textarea id="task_desc"  v-model="newTaskDesc" required></textarea>
-            <label for="deadline">Дэдлайн:</label>
-            <input type="date" id="deadline" v-model="deadline" name="deadline-task" required>
-            <button type="submit">Добавить карточку</button>
-        </form>
-        <div v-for="card in column1" :key="card.id" class="card">
-            <h3>{{ card.title }}</h3>
-            <h3>Описание: {{ card.description }}</h3>
-            <h3>Дэдлайн: {{ card.deadline }}</h3>
-            <h3>Дата создания: {{ card.creationDate }}</h3>
-            <div v-if="card.editedDate">
-                <h3>Отредактировано: {{card.editedDate}}</h3>
-            </div>
-            <div v-if="card.edited">
-                <label>Измените описание:</label><br>
-                <textarea v-model="editedDescription"></textarea><br>
-                <label>Измените дэдлайн:</label>
-                <input type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31"/><br>
-                <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
-            </div>
-            <button  v-on:click="editTasks(card)">Редактировать</button>
-            <button v-on:click="removeTask(card)">Удалить</button>
-            <button  v-on:click="moveToColumn2(card)">Переместить во второй столбец</button>
-        </div>
-    </div>
-
-    <div class="column">
-        <h2>Задачи в работе</h2>
-        <div v-for="card in column2" :key="card.id" class="card">
-            <h3>{{ card.title }}</h3>
-            <h3>Описание: {{ card.description }}</h3>
-            <h3>Дэдлайн: {{ card.deadline }}</h3>
-            <h3>Дата создания: {{ card.creationDate }}</h3>
-            <div v-if="card.editedDate">
-                <h3>Отредактировано: {{card.editedDate}}</h3>
-            </div>
-            <div v-if="card.reasonForReturn">
-                <h3>Причина возврата: {{card.reasonForReturn}}</h3>
-            </div>
-            <div v-if="card.edited">
-                <label>Измените описание:</label>
-                <textarea v-model="editedDescription"></textarea>
-                <label>Измените дэдлайн:</label>
-                <input type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31">
-                <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
-            </div>
-            <button  v-on:click="editTasks(card)">Редактировать</button>
-            <button  v-on:click="moveToColumn3(card)">Переместить в третий столбец</button>
-        </div>
-    </div>
-
-    <div class="column">
-        <h2>Тестирование</h2>
-        <div v-for="card in column3" :key="card.id" class="card">
-            <h3>{{ card.title }}</h3>
-            <h3>Описание: {{ card.description }}</h3>
-            <h3>Дэдлайн: {{ card.deadline }}</h3>
-            <h3>Дата создания: {{ card.creationDate }}</h3>
-            <div v-if="card.editedDate">
-                <h3>Отредактировано: {{card.editedDate}}</h3>
-            </div>
-            <div v-if="card.edited">
-                <label>Измените описание:</label>
-                <textarea v-model="editedDescription"></textarea>
-                <label>Измените дэдлайн:</label>
-                <input type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31">
-                <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
-            </div>
-            <button v-on:click="editTasks(card)">Редактировать</button>
-            <button v-on:click="moveToColumn4(card)">Переместить в четвертый столбец</button>
-            <form>
-                <button v-on:click="returnToColumn2(card)" :disabled="card.reasonForReturn === '' ">Вернуть с замечанием</button>
-                <input type="text" v-model="card.reasonForReturn" placeholder="укажите причину возврата">
+    <div class="columns">
+        <div class="column">
+            <h2>Запланированные задачи</h2>
+            <form class="form" @submit.prevent="addTask">
+                <label for="task_title">Заголовок:</label>
+                <input id="task_title" type="text" v-model="newTaskTitle" required>
+                <label for="task_desc">Описание:</label>
+                <textarea id="task_desc" v-model="newTaskDesc" required></textarea>
+                <label for="deadline">Дэдлайн:</label>
+                <input type="date" id="deadline" v-model="deadline" name="deadline-task" required>
+                <button class="addButton" type="submit">Добавить карточку</button>
             </form>
+            <div v-for="card in column1" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>Описание: {{ card.description }}</p>
+                <p>Дэдлайн: {{ card.deadline }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <div v-if="card.editedDate">
+                    <p>Отредактировано: {{card.editedDate}}</p>
+                </div>
+                <div class="change" v-if="card.edited">
+                    <label>Измените описание:</label>
+                    <textarea class="changeDesc" v-model="editedDescription" required></textarea>
+                    <label>Измените дэдлайн:</label>
+                    <input class="changeDeadline" type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31" required>
+                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+                </div>
+                <div class="buttons">
+                    <button class="button" v-on:click="editTasks(card)">Редактировать</button>
+                    <button class="button" v-on:click="removeTask(card)">Удалить</button>
+                    <button class="button" v-on:click="moveToColumn2(card)">Переместить во второй столбец</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Задачи в работе</h2>
+            <div v-for="card in column2" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>Описание: {{ card.description }}</p>
+                <p>Дэдлайн: {{ card.deadline }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <div v-if="card.editedDate">
+                    <p>Отредактировано: {{card.editedDate}}</p>
+                </div>
+                <div v-if="card.reasonForReturn">
+                    <p>Причина возврата: {{card.reasonForReturn}}</p>
+                </div>
+                <div class="change" v-if="card.edited">
+                    <label>Измените описание:</label>
+                    <textarea class="changeDesc" v-model="editedDescription" required></textarea>
+                    <label>Измените дэдлайн:</label>
+                    <input class="changeDeadline" type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31" required>
+                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+                </div>
+                <div class="buttons">
+                    <button class="button" v-on:click="editTasks(card)">Редактировать</button>
+                    <button class="button" v-on:click="moveToColumn3(card)">Переместить в третий столбец</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Тестирование</h2>
+            <div v-for="card in column3" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>Описание: {{ card.description }}</p>
+                <p>Дэдлайн: {{ card.deadline }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <div v-if="card.editedDate">
+                    <p>Отредактировано: {{card.editedDate}}</p>
+                </div>
+                <div class="change" v-if="card.edited">
+                    <label>Измените описание:</label>
+                    <textarea class="changeDesc" v-model="editedDescription" required></textarea>
+                    <label>Измените дэдлайн:</label>
+                    <input class="changeDeadline" type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31" required>
+                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+                </div>
+                <div class="buttons">
+                    <button class="button" v-on:click="editTasks(card)">Редактировать</button>
+                    <button class="button" v-on:click="moveToColumn4(card)">Переместить в четвертый столбец</button>
+                    <button class="button" v-on:click="returnToColumn2(card)" :disabled="card.reasonForReturn === '' ">Вернуть с замечанием</button>
+                    <input class="reason" type="text" v-model="card.reasonForReturn" placeholder="укажите причину возврата">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="column">
+            <h2>Выполненные задачи</h2>
+            <div v-for="card in column4" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <p>Описание: {{ card.description }}</p>
+                <p>Дата создания: {{ card.creationDate }}</p>
+                <p>{{card.timeout}}</p>
+            </div>
         </div>
     </div>
-
-    <div class="column">
-        <h2>Выполненные задачи</h2>
-        <div v-for="card in column4" :key="card.id" class="card">
-            <h3>{{ card.title }}</h3>
-            <h3>Описание: {{ card.description }}</h3>
-            <h3>Дата создания: {{ card.creationDate }}</h3>
-            <h3>{{card.timeout}}</h3>
-        </div>
-    </div>
-
 </div>
 </body>
 </html>
