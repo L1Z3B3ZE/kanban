@@ -47,6 +47,10 @@ new Vue({
             this.column1.splice(this.column1.indexOf(card), 1);
             this.column2.push(card);
         },
+        moveToColumn3(card){
+            this.column2.splice(this.column2.indexOf(card), 1);
+            this.column3.push(card);
+        },
     }
 })
 

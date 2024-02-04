@@ -34,7 +34,7 @@
             <div v-if="card.edited">
                 <label>Измените описание:</label><br>
                 <textarea v-model="editedDescription"></textarea><br>
-                <label>Измените срок сдачи:</label>
+                <label>Измените дэдлайн:</label>
                 <input type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31"/><br>
                 <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
             </div>
@@ -47,15 +47,33 @@
     <div class="column">
         <h2>Задачи в работе</h2>
         <div v-for="card in column2" :key="card.id" class="card">
-            <h3>Заголовок: {{ card.title }}</h3>
+            <h3>{{ card.title }}</h3>
             <h3>Описание: {{ card.description }}</h3>
-            <h3>Дата завершения: {{ card.deadline }}</h3>
+            <h3>Дэдлайн: {{ card.deadline }}</h3>
             <h3>Дата создания: {{ card.creationDate }}</h3>
+            <div v-if="card.editedDate">
+                <h3>Отредактировано: {{card.editedDate}}</h3>
+            </div>
+            <div v-if="card.edited">
+                <label>Измените описание:</label>
+                <textarea v-model="editedDescription"></textarea>
+                <label>Измените дэдлайн:</label>
+                <input type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31">
+                <button v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+            </div>
+            <button  v-on:click="editTasks(card)">Редактировать</button>
+            <button  v-on:click="moveToColumn3(card)">Переместить в третий столбец</button>
         </div>
     </div>
 
     <div class="column">
         <h2>Тестирование</h2>
+        <div v-for="card in column3" :key="card.id" class="card">
+            <h3>{{ card.title }}</h3>
+            <h3>Описание: {{ card.description }}</h3>
+            <h3>Дэдлайн: {{ card.deadline }}</h3>
+            <h3>Дата создания: {{ card.creationDate }}</h3>
+        </div>
     </div>
 
     <div class="column">
