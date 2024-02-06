@@ -32,11 +32,13 @@
                     <p>Отредактировано: {{card.editedDate}}</p>
                 </div>
                 <div class="change" v-if="card.edited">
+                    <label>Измените заголовок:</label>
+                    <input class="changeTitle" v-model="editedTitle" required>
                     <label>Измените описание:</label>
                     <textarea class="changeDesc" v-model="editedDescription" required></textarea>
                     <label>Измените дэдлайн:</label>
                     <input class="changeDeadline" type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31" required>
-                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline, editedTitle)">Сохранить</button>
                 </div>
                 <div class="buttons">
                     <button class="button" v-on:click="editTasks(card)">Редактировать</button>
@@ -60,11 +62,13 @@
                     <p>Причина возврата: {{card.reasonForReturn}}</p>
                 </div>
                 <div class="change" v-if="card.edited">
+                    <label>Измените заголовок:</label>
+                    <input class="changeTitle" v-model="editedTitle" required>
                     <label>Измените описание:</label>
                     <textarea class="changeDesc" v-model="editedDescription" required></textarea>
                     <label>Измените дэдлайн:</label>
                     <input class="changeDeadline" type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31" required>
-                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline, editedTitle)">Сохранить</button>
                 </div>
                 <div class="buttons">
                     <button class="button" v-on:click="editTasks(card)">Редактировать</button>
@@ -84,11 +88,13 @@
                     <p>Отредактировано: {{card.editedDate}}</p>
                 </div>
                 <div class="change" v-if="card.edited">
+                    <label>Измените заголовок:</label>
+                    <input class="changeTitle" v-model="editedTitle" required>
                     <label>Измените описание:</label>
                     <textarea class="changeDesc" v-model="editedDescription" required></textarea>
                     <label>Измените дэдлайн:</label>
                     <input class="changeDeadline" type="date" v-model="editedDeadline"  min="2024-01-01" max="2025-12-31" required>
-                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline)">Сохранить</button>
+                    <button class="button" v-on:click="saveEditedTask(card,editedDescription, editedDeadline, editedTitle)">Сохранить</button>
                 </div>
                 <div class="buttons">
                     <button class="button" v-on:click="editTasks(card)">Редактировать</button>
